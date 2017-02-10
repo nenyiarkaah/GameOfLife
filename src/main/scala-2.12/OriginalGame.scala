@@ -1,7 +1,7 @@
 import scala.util.{Random, Try}
 
 /**
-  * Created by Nenyi on 09/02/2017.
+  * As written in the coding dojo.
   */
 object OriginalGame {
   type State = Boolean
