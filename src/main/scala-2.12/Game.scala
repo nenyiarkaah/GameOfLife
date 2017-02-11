@@ -97,6 +97,8 @@ object Game {
 
   def transformBoardOverGenerations(board: Board, epoch: Int) = {
     var epochBoard = board
+    println("Starting Point")
+    printBoard(epochBoard)
     for {i <- 0 until epoch} {
       epochBoard = transformBoard(epochBoard)
       println("epoch " + i)
