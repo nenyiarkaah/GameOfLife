@@ -14,6 +14,9 @@ object Game {
 
   def max(a: Coordinates, b: Coordinates): Coordinates = if ((a.x > b.x) & (a.y > b.y)) a else b
 
+  def prod[T](lst: List[T], n: Int) = List.fill(n)(lst)
+    .flatten.combinations(n).flatMap(_.permutations)
+
   def createBoard(x: Int, y: Int): Board = {
     var board = new ListBuffer[Coordinates]
     for {
@@ -34,17 +37,8 @@ object Game {
     val yMin = clamp(y - radius, 0, maxCoordinates.y)
     val yMax = clamp(y + radius, 0, maxCoordinates.y) + 1
     var neighbours = ListBuffer[Coordinates]()
-
-    for {
-      xPoint <- xMin until xMax
-      yPoint <- yMin until yMax
-    } {
-      if (!(xPoint == x & yPoint == y)) {
-        val state = board.filter(b => (b.x == xPoint) & (b.y == yPoint)).headOption.get.state
-        neighbours += storeCoordinate(xPoint, yPoint, state)
-      }
-    }
-    neighbours.toList
+    generateCoordinates(x, y, xMin, xMax, yMin, yMax).map(n =>
+      board.filter(b => (b.x == n._1) & (b.y == n._2)).headOption.get)
   }
 
   def getLiveNeighbours(board: Board, x: Int, y: Int) = {
@@ -105,5 +99,15 @@ object Game {
       printBoard(epochBoard)
     }
   }
+
+  def generateCoordinates(x: Int, y: Int, xMin: Int, xMax: Int, yMin: Int, yMax: Int): List[(Int, Int)] = {
+    val xRange = List.range(xMin, xMax)
+    val yRange = List.range(yMin, yMax)
+
+    prod(yRange, xRange.size)
+      .map(xRange.zip(_)).toList.flatten.distinct
+      .filter(_ != (x, y))
+  }
+
 
 }
