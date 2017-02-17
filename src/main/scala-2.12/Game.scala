@@ -18,14 +18,9 @@ object Game {
     .flatten.combinations(n).flatMap(_.permutations)
 
   def createBoard(x: Int, y: Int): Board = {
-    var board = new ListBuffer[Coordinates]
-    for {
-      xPoint <- 0 until x
-      yPoint <- 0 until y
-    } {
-      board += storeCoordinate(xPoint, yPoint, Random.nextBoolean)
-    }
-    board.toList
+    val xRange = List.range(0, x)
+    val yRange = List.range(0, y)
+    xRange.map(xPoint => yRange.map(yPoint => storeCoordinate(xPoint, yPoint, Random.nextBoolean))).flatten
   }
 
   def getNeighbours(board: Board, x: Int, y: Int) = {

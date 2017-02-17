@@ -27,10 +27,7 @@ import scala.util.Random
 //
 //val neighbours = neighbourcoords.map(n =>
 //  board.filter(b => (b.x == n._1) & (b.y == n._2)).headOption.get)
-val x: Int = 8
-val y: Int = 8
-val xRange = List.range(0, x)
-val yRange = List.range(0, y)
+
 
 //def prod[T](lst: List[T], n: Int) = List.fill(n)(lst)
 //  .flatten.combinations(n).flatMap(_.permutations)
